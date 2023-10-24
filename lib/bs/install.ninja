@@ -1,0 +1,30 @@
+rescript = 1
+rule cp
+  command = cmd.exe /C copy /Y $i $out >NUL
+rule touch
+ command = cmd.exe /C type nul >>$out & copy $out+,, >NUL
+o MlPerceptronLayerTest.cmi : cp ..\bs\rescript\test\MlPerceptronLayerTest.cmi
+o MlPerceptronLayerTest.cmj : cp ..\bs\rescript\test\MlPerceptronLayerTest.cmj
+o MlPerceptronLayerTest.cmt : cp ..\bs\rescript\test\MlPerceptronLayerTest.cmt
+o MlPerceptronLayerTest.res : cp ..\..\rescript\test\MlPerceptronLayerTest.res
+o MlActivationFunctionTest.cmi : cp ..\bs\rescript\test\MlActivationFunctionTest.cmi
+o MlActivationFunctionTest.cmj : cp ..\bs\rescript\test\MlActivationFunctionTest.cmj
+o MlActivationFunctionTest.cmt : cp ..\bs\rescript\test\MlActivationFunctionTest.cmt
+o MlActivationFunctionTest.res : cp ..\..\rescript\test\MlActivationFunctionTest.res
+o MlErrorMetricFunctionTest.cmi : cp ..\bs\rescript\test\MlErrorMetricFunctionTest.cmi
+o MlErrorMetricFunctionTest.cmj : cp ..\bs\rescript\test\MlErrorMetricFunctionTest.cmj
+o MlErrorMetricFunctionTest.cmt : cp ..\bs\rescript\test\MlErrorMetricFunctionTest.cmt
+o MlErrorMetricFunctionTest.res : cp ..\..\rescript\test\MlErrorMetricFunctionTest.res
+o MlPerceptronLayer.cmi : cp ..\bs\rescript\src\MlPerceptronLayer.cmi
+o MlPerceptronLayer.cmj : cp ..\bs\rescript\src\MlPerceptronLayer.cmj
+o MlPerceptronLayer.cmt : cp ..\bs\rescript\src\MlPerceptronLayer.cmt
+o MlPerceptronLayer.res : cp ..\..\rescript\src\MlPerceptronLayer.res
+o MlActivationFunction.cmi : cp ..\bs\rescript\src\MlActivationFunction.cmi
+o MlActivationFunction.cmj : cp ..\bs\rescript\src\MlActivationFunction.cmj
+o MlActivationFunction.cmt : cp ..\bs\rescript\src\MlActivationFunction.cmt
+o MlActivationFunction.res : cp ..\..\rescript\src\MlActivationFunction.res
+o MlErrorMetricFunction.cmi : cp ..\bs\rescript\src\MlErrorMetricFunction.cmi
+o MlErrorMetricFunction.cmj : cp ..\bs\rescript\src\MlErrorMetricFunction.cmj
+o MlErrorMetricFunction.cmt : cp ..\bs\rescript\src\MlErrorMetricFunction.cmt
+o MlErrorMetricFunction.res : cp ..\..\rescript\src\MlErrorMetricFunction.res
+build install.stamp : touch MlPerceptronLayerTest.cmi MlPerceptronLayerTest.cmj MlActivationFunctionTest.cmi MlActivationFunctionTest.cmj MlErrorMetricFunctionTest.cmi MlErrorMetricFunctionTest.cmj MlPerceptronLayer.cmi MlPerceptronLayer.cmj MlActivationFunction.cmi MlActivationFunction.cmj MlErrorMetricFunction.cmi MlErrorMetricFunction.cmj 
