@@ -27,8 +27,6 @@ o MlPerceptronLayer.cmi : cp ..\bs\rescript\src\MlPerceptronLayer.cmi
 o MlPerceptronLayer.cmj : cp ..\bs\rescript\src\MlPerceptronLayer.cmj
 o MlPerceptronLayer.cmt : cp ..\bs\rescript\src\MlPerceptronLayer.cmt
 o MlPerceptronLayer.res : cp ..\..\rescript\src\MlPerceptronLayer.res
-o MlPerceptronLayer.resi : cp ..\..\rescript\src\MlPerceptronLayer.resi
-o MlPerceptronLayer.cmti : cp ..\bs\rescript\src\MlPerceptronLayer.cmti
 o MlActivationFunction.cmi : cp ..\bs\rescript\src\MlActivationFunction.cmi
 o MlActivationFunction.cmj : cp ..\bs\rescript\src\MlActivationFunction.cmj
 o MlActivationFunction.cmt : cp ..\bs\rescript\src\MlActivationFunction.cmt

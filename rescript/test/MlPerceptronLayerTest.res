@@ -35,11 +35,14 @@ module Layer1: Layer1 = {
   }
   `)
 
-  let arrToLayer: array<'a> => option<layer<'a>> = %raw(`
-  function (a) {
-    return a;
+  let arrToLayer: array<'a> => result<layer<'a>, exn> = x => {
+    let f = %raw(`
+    function (a) {
+      return a;
+    }
+    `)
+    Ok(f(x))
   }
-  `)
 
   let init: (int => 'a) => layer<'a> = %raw(`
   function (f) {
@@ -76,11 +79,14 @@ module Layer2: Layer2 = {
   }
   `)
 
-  let arrToLayer: array<'a> => option<layer<'a>> = %raw(`
-  function (a) {
-    return a;
+  let arrToLayer: array<'a> => result<layer<'a>, exn> = x => {
+    let f = %raw(`
+    function (a) {
+      return a;
+    }
+    `)
+    Ok(f(x))
   }
-  `)
 
   let init: (int => 'a) => layer<'a> = %raw(`
   function (f) {
@@ -104,7 +110,7 @@ describe("test perceptron", () => {
       {solve: rs2, derivative: rd2},
       {solve: rs3, derivative: rd3},
     ) =
-      PerceptronLayer.input(given)->Layer1.deconstruct
+      PerceptronLayer.input(given)->Result.getExn->Layer1.deconstruct
     it("rs1 eq", () => {Assert.ok(approxEq(rs1, 0.66))})
     it("rs2 eq", () => {Assert.ok(approxEq(rs2, 0.97))})
     it("rs3 eq", () => {Assert.ok(approxEq(rs3, 0.17))})
@@ -125,7 +131,7 @@ describe("test perceptron", () => {
       Layer2.construct(-5.12, 3.11),
     )
     let ({solve: rs1, derivative: rd1}, {solve: rs2, derivative: rd2}) =
-      PerceptronLayer.solve(givenL1Vals, givenWeights)->Layer2.deconstruct
+      PerceptronLayer.solve(givenL1Vals, givenWeights)->Result.getExn->Layer2.deconstruct
     it("rs1 eq", () => {Assert.ok(approxEq(rs1, 0.44))})
     it("rs2 eq", () => {Assert.ok(approxEq(rs2, 0.28))})
     it("rd1 eq", () => {Assert.ok(approxEq(rd1, 0.25))})
@@ -138,7 +144,8 @@ describe("test perceptron", () => {
       {solve: 0.28, derivative: 0.20},
     )
     let givenL2Nominals = Layer2.construct(0.46, 0.5)
-    let (ev1, ev2) = PerceptronLayer.findError(givenL2Vals, givenL2Nominals)->Layer2.deconstruct
+    let (ev1, ev2) =
+      PerceptronLayer.findError(givenL2Vals, givenL2Nominals)->Result.getExn->Layer2.deconstruct
     it("ev1 eq", () => {Assert.ok(approxEq(ev1->ErrorMetricEuclidean.errToFloat, -0.02))})
     it("ev2 eq", () => {Assert.ok(approxEq(ev2->ErrorMetricEuclidean.errToFloat, -0.22))})
   })
@@ -159,7 +166,9 @@ describe("test perceptron", () => {
       ErrorMetricEuclidean.floatToErr(-0.1),
     )
     let (err1, err2, err3) =
-      PerceptronLayer.backpropagadeError(givenL1Vals, givenError, givenWeights)->Layer1.deconstruct
+      PerceptronLayer.backpropagadeError(givenL1Vals, givenError, givenWeights)
+      ->Result.getExn
+      ->Layer1.deconstruct
     it("err1 eq", () => {Assert.ok(approxEq(err1->ErrorMetricEuclidean.errToFloat, 0.14))})
     it("err2 eq", () => {Assert.ok(approxEq(err2->ErrorMetricEuclidean.errToFloat, 0.0))})
     it("err3 eq", () => {Assert.ok(approxEq(err3->ErrorMetricEuclidean.errToFloat, -0.66))})
@@ -181,12 +190,9 @@ describe("test perceptron", () => {
       ErrorMetricEuclidean.floatToErr(-0.1),
     )
     let (w1, w2, w3) =
-      PerceptronLayer.weightCorrection(
-        givenL1Vals,
-        givenError,
-        givenWeights,
-        0.1,
-      )->Layer1.deconstruct
+      PerceptronLayer.weightCorrection(givenL1Vals, givenError, givenWeights, 0.1)
+      ->Result.getExn
+      ->Layer1.deconstruct
     let (w11, w12) = w1->Layer2.deconstruct
     let (w21, w22) = w2->Layer2.deconstruct
     let (w31, w32) = w3->Layer2.deconstruct
