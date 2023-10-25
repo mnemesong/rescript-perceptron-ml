@@ -27,12 +27,18 @@ o MlPerceptronLayer.cmi : cp ..\bs\rescript\src\MlPerceptronLayer.cmi
 o MlPerceptronLayer.cmj : cp ..\bs\rescript\src\MlPerceptronLayer.cmj
 o MlPerceptronLayer.cmt : cp ..\bs\rescript\src\MlPerceptronLayer.cmt
 o MlPerceptronLayer.res : cp ..\..\rescript\src\MlPerceptronLayer.res
+o MlPerceptronLayer.resi : cp ..\..\rescript\src\MlPerceptronLayer.resi
+o MlPerceptronLayer.cmti : cp ..\bs\rescript\src\MlPerceptronLayer.cmti
 o MlActivationFunction.cmi : cp ..\bs\rescript\src\MlActivationFunction.cmi
 o MlActivationFunction.cmj : cp ..\bs\rescript\src\MlActivationFunction.cmj
 o MlActivationFunction.cmt : cp ..\bs\rescript\src\MlActivationFunction.cmt
 o MlActivationFunction.res : cp ..\..\rescript\src\MlActivationFunction.res
+o MlActivationFunction.resi : cp ..\..\rescript\src\MlActivationFunction.resi
+o MlActivationFunction.cmti : cp ..\bs\rescript\src\MlActivationFunction.cmti
 o MlErrorMetricFunction.cmi : cp ..\bs\rescript\src\MlErrorMetricFunction.cmi
 o MlErrorMetricFunction.cmj : cp ..\bs\rescript\src\MlErrorMetricFunction.cmj
 o MlErrorMetricFunction.cmt : cp ..\bs\rescript\src\MlErrorMetricFunction.cmt
 o MlErrorMetricFunction.res : cp ..\..\rescript\src\MlErrorMetricFunction.res
+o MlErrorMetricFunction.resi : cp ..\..\rescript\src\MlErrorMetricFunction.resi
+o MlErrorMetricFunction.cmti : cp ..\bs\rescript\src\MlErrorMetricFunction.cmti
 build install.stamp : touch MlPerceptronTest.cmi MlPerceptronTest.cmj MlPerceptronLayerTest.cmi MlPerceptronLayerTest.cmj MlActivationFunctionTest.cmi MlActivationFunctionTest.cmj MlErrorMetricFunctionTest.cmi MlErrorMetricFunctionTest.cmj MlPerceptron.cmi MlPerceptron.cmj MlPerceptronLayer.cmi MlPerceptronLayer.cmj MlActivationFunction.cmi MlActivationFunction.cmj MlErrorMetricFunction.cmi MlErrorMetricFunction.cmj 

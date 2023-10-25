@@ -3,7 +3,7 @@ module type ActivFunc = {
   let derivative: float => float
 }
 
-module ActivFuncSigmoid = {
+module ActivFuncSigmoid: ActivFunc = {
   let solve = (x: float) => 1.0 /. (1.0 +. Js.Math.exp(-.x))
   let derivative = (x: float) => {
     let s = solve(x)
@@ -11,12 +11,12 @@ module ActivFuncSigmoid = {
   }
 }
 
-module ActivFuncReLU = {
+module ActivFuncReLU: ActivFunc = {
   let solve = (x: float) => Js.Math.max_float(0.0, x)
   let derivative = (x: float) => x > 0.0 ? 1.0 : 0.0
 }
 
-module ActivFuncTh = {
+module ActivFuncTh: ActivFunc = {
   let solve = (x: float) =>
     (Js.Math.exp(x) -. Js.Math.exp(-.x)) /. (Js.Math.exp(x) +. Js.Math.exp(-.x))
   let derivative = (x: float) => {

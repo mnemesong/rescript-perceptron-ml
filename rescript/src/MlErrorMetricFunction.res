@@ -6,7 +6,7 @@ module type ErrorMetric = {
   let errMetricDerivative: (float, float) => errVal
 }
 
-module ErrorMetricEuclidean = {
+module ErrorMetricEuclidean: ErrorMetric = {
   type errVal = float
 
   let errToFloat = (errVal: errVal): float => errVal

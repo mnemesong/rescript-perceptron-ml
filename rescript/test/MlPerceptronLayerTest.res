@@ -154,7 +154,10 @@ describe("test perceptron", () => {
       Layer2.construct(0.15, -1.67),
       Layer2.construct(-5.12, 3.11),
     )
-    let givenError = Layer2.construct(0.87, -0.1)
+    let givenError = Layer2.construct(
+      ErrorMetricEuclidean.floatToErr(0.87),
+      ErrorMetricEuclidean.floatToErr(-0.1),
+    )
     let (err1, err2, err3) =
       PerceptronLayer.backpropagadeError(givenL1Vals, givenError, givenWeights)->Layer1.deconstruct
     it("err1 eq", () => {Assert.ok(approxEq(err1->ErrorMetricEuclidean.errToFloat, 0.14))})
@@ -173,7 +176,10 @@ describe("test perceptron", () => {
       Layer2.construct(0.15, -1.67),
       Layer2.construct(-5.12, 3.11),
     )
-    let givenError = Layer2.construct(0.87, -0.1)
+    let givenError = Layer2.construct(
+      ErrorMetricEuclidean.floatToErr(0.87),
+      ErrorMetricEuclidean.floatToErr(-0.1),
+    )
     let (w1, w2, w3) =
       PerceptronLayer.weightCorrection(
         givenL1Vals,
@@ -184,12 +190,12 @@ describe("test perceptron", () => {
     let (w11, w12) = w1->Layer2.deconstruct
     let (w21, w22) = w2->Layer2.deconstruct
     let (w31, w32) = w3->Layer2.deconstruct
-    it("w11 eq", () => {Assert.ok(approxEq(w11->ErrorMetricEuclidean.errToFloat, 0.7))})
-    it("w12 eq", () => {Assert.ok(approxEq(w12->ErrorMetricEuclidean.errToFloat, 0.25))})
-    it("w21 eq", () => {Assert.ok(approxEq(w21->ErrorMetricEuclidean.errToFloat, 0.07))})
-    it("w22 eq", () => {Assert.ok(approxEq(w22->ErrorMetricEuclidean.errToFloat, -1.66))})
-    it("w31 eq", () => {Assert.ok(approxEq(w31->ErrorMetricEuclidean.errToFloat, -5.13))})
-    it("w32 eq", () => {Assert.ok(approxEq(w32->ErrorMetricEuclidean.errToFloat, 3.11))})
+    it("w11 eq", () => {Assert.ok(approxEq(w11, 0.7))})
+    it("w12 eq", () => {Assert.ok(approxEq(w12, 0.25))})
+    it("w21 eq", () => {Assert.ok(approxEq(w21, 0.07))})
+    it("w22 eq", () => {Assert.ok(approxEq(w22, -1.66))})
+    it("w31 eq", () => {Assert.ok(approxEq(w31, -5.13))})
+    it("w32 eq", () => {Assert.ok(approxEq(w32, 3.11))})
   })
 
   describe("test init", () => {
