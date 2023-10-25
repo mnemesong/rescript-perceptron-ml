@@ -18,6 +18,7 @@ module type PerceptronLayersCross = {
   let findError: (layer2<activFuncValue>, layer2<float>) => layer2<errVal>
   let backpropagadeError: (layer1<activFuncValue>, layer2<errVal>, weights) => layer1<errVal>
   let weightCorrection: (layer1<activFuncValue>, layer2<errVal>, weights, float) => weights
+  let init: ((int, int) => float) => weights
 }
 
 module type PerceptronLayer = {
@@ -25,6 +26,45 @@ module type PerceptronLayer = {
 
   let layerToArr: layer<'a> => array<'a>
   let arrToLayer: array<'a> => option<layer<'a>>
+  let init: (int => 'a) => layer<'a>
+}
+
+module type LayerCount = {
+  let layerCount: int
+}
+
+module type MakePerceptronLayerLimitedArr = (LayerCount: LayerCount) => PerceptronLayer
+
+module MakePerceptronLayerLimitedArr: MakePerceptronLayerLimitedArr = (LayerCount: LayerCount) => {
+  type layer<'a>
+
+  let layerToArr: layer<'a> => array<'a> = %raw(`
+  function (vals) {
+    return vals;
+  }
+  `)
+
+  let arrToLayer: array<'a> => option<layer<'a>> = arr => {
+    let convert: array<'a> => layer<'a> = %raw(`
+    function (vals) {
+      return vals;
+    }
+    `)
+    Array.length(arr) === LayerCount.layerCount ? Some(convert(arr)) : None
+  }
+
+  let init = (initor: int => 'a): layer<'a> => {
+    let il: (int => 'a, int) => layer<'a> = %raw(`
+    function (initor, cnt) {
+      let result = [];
+      for(let i = 0; i < cnt; i++) {
+        result.push(initor(i));
+      }
+      return result;
+    }
+    `)
+    il(initor, LayerCount.layerCount)
+  }
 }
 
 module type MakePerceptronLayersCross = (
@@ -132,5 +172,11 @@ module MakePerceptronLayersCross: MakePerceptronLayersCross = (
     ->Array.map(nw => nw->Layer2.arrToLayer->Option.getExn)
     ->Layer1.arrToLayer
     ->Option.getExn
+  }
+
+  let init = (initor: (int, int) => float): weights => {
+    Layer1.init(i => {
+      Layer2.init(j => initor(i, j))
+    })
   }
 }

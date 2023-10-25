@@ -2,15 +2,18 @@ rescript = 1
 g_finger := D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml\install.stamp
 rule astj
   command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
-o rescript\test\MlPerceptronLayerTest.ast : astj ..\..\rescript\test\MlPerceptronLayerTest.res
+o rescript\test\MlPerceptronTest.ast : astj ..\..\rescript\test\MlPerceptronTest.res
 rule deps
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash f487c08c1f0984147923d90a78010db1 $in
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash d0486222c5e17059a50bb735e1546b5e $in
   restat = 1
-o rescript\test\MlPerceptronLayerTest.d : deps rescript\test\MlPerceptronLayerTest.ast
+o rescript\test\MlPerceptronTest.d : deps rescript\test\MlPerceptronTest.ast
 rule mij
   command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -I "rescript\src" -I "rescript\test" -I rescript -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml"   -bs-package-name rescript-perceptron-ml -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
   dyndep = 1
   restat = 1
+o rescript\test\MlPerceptronTest.cmj rescript\test\MlPerceptronTest.cmi ..\js\rescript\test\MlPerceptronTest.bs.js : mij rescript\test\MlPerceptronTest.ast
+o rescript\test\MlPerceptronLayerTest.ast : astj ..\..\rescript\test\MlPerceptronLayerTest.res
+o rescript\test\MlPerceptronLayerTest.d : deps rescript\test\MlPerceptronLayerTest.ast
 o rescript\test\MlPerceptronLayerTest.cmj rescript\test\MlPerceptronLayerTest.cmi ..\js\rescript\test\MlPerceptronLayerTest.bs.js : mij rescript\test\MlPerceptronLayerTest.ast
 o rescript\test\MlActivationFunctionTest.ast : astj ..\..\rescript\test\MlActivationFunctionTest.res
 o rescript\test\MlActivationFunctionTest.d : deps rescript\test\MlActivationFunctionTest.ast
@@ -18,6 +21,9 @@ o rescript\test\MlActivationFunctionTest.cmj rescript\test\MlActivationFunctionT
 o rescript\test\MlErrorMetricFunctionTest.ast : astj ..\..\rescript\test\MlErrorMetricFunctionTest.res
 o rescript\test\MlErrorMetricFunctionTest.d : deps rescript\test\MlErrorMetricFunctionTest.ast
 o rescript\test\MlErrorMetricFunctionTest.cmj rescript\test\MlErrorMetricFunctionTest.cmi ..\js\rescript\test\MlErrorMetricFunctionTest.bs.js : mij rescript\test\MlErrorMetricFunctionTest.ast
+o rescript\src\MlPerceptron.ast : astj ..\..\rescript\src\MlPerceptron.res
+o rescript\src\MlPerceptron.d : deps rescript\src\MlPerceptron.ast
+o rescript\src\MlPerceptron.cmj rescript\src\MlPerceptron.cmi ..\js\rescript\src\MlPerceptron.bs.js : mij rescript\src\MlPerceptron.ast
 o rescript\src\MlPerceptronLayer.ast : astj ..\..\rescript\src\MlPerceptronLayer.res
 o rescript\src\MlPerceptronLayer.d : deps rescript\src\MlPerceptronLayer.ast
 o rescript\src\MlPerceptronLayer.cmj rescript\src\MlPerceptronLayer.cmi ..\js\rescript\src\MlPerceptronLayer.bs.js : mij rescript\src\MlPerceptronLayer.ast

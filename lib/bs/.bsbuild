@@ -1,4 +1,6 @@
-6
+8
+MlPerceptron
+MlPerceptronTest
 MlPerceptronLayer
 MlActivationFunction
 MlErrorMetricFunction
@@ -6,5 +8,5 @@ MlPerceptronLayerTest
 MlActivationFunctionTest
 MlErrorMetricFunctionTest
 rescript\src	rescript\test	
-1
+1
 0

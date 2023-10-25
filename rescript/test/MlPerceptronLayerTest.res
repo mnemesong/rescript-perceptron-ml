@@ -11,6 +11,7 @@ module type Layer1 = {
   include PerceptronLayer
   let construct: ('a, 'a, 'a) => layer<'a>
   let deconstruct: layer<'a> => ('a, 'a, 'a)
+  let init: (int => 'a) => layer<'a>
 }
 
 module Layer1: Layer1 = {
@@ -33,9 +34,16 @@ module Layer1: Layer1 = {
     return a;
   }
   `)
+
   let arrToLayer: array<'a> => option<layer<'a>> = %raw(`
   function (a) {
     return a;
+  }
+  `)
+
+  let init: (int => 'a) => layer<'a> = %raw(`
+  function (f) {
+    return [f(0), f(1), f(2)];
   }
   `)
 }
@@ -44,6 +52,7 @@ module type Layer2 = {
   include PerceptronLayer
   let construct: ('a, 'a) => layer<'a>
   let deconstruct: layer<'a> => ('a, 'a)
+  let init: (int => 'a) => layer<'a>
 }
 
 module Layer2: Layer2 = {
@@ -66,9 +75,16 @@ module Layer2: Layer2 = {
     return a;
   }
   `)
+
   let arrToLayer: array<'a> => option<layer<'a>> = %raw(`
   function (a) {
     return a;
+  }
+  `)
+
+  let init: (int => 'a) => layer<'a> = %raw(`
+  function (f) {
+    return [f(0), f(1)];
   }
   `)
 }
@@ -125,5 +141,75 @@ describe("test perceptron", () => {
     let (ev1, ev2) = PerceptronLayer.findError(givenL2Vals, givenL2Nominals)->Layer2.deconstruct
     it("ev1 eq", () => {Assert.ok(approxEq(ev1->ErrorMetricEuclidean.errToFloat, -0.02))})
     it("ev2 eq", () => {Assert.ok(approxEq(ev2->ErrorMetricEuclidean.errToFloat, -0.22))})
+  })
+
+  describe("test backpropagadeError", () => {
+    let givenL1Vals = Layer1.construct(
+      {solve: 0.66, derivative: 0.22},
+      {solve: 0.97, derivative: 0.02},
+      {solve: 0.17, derivative: 0.14},
+    )
+    let givenWeights = Layer1.construct(
+      Layer2.construct(0.76, 0.25),
+      Layer2.construct(0.15, -1.67),
+      Layer2.construct(-5.12, 3.11),
+    )
+    let givenError = Layer2.construct(0.87, -0.1)
+    let (err1, err2, err3) =
+      PerceptronLayer.backpropagadeError(givenL1Vals, givenError, givenWeights)->Layer1.deconstruct
+    it("err1 eq", () => {Assert.ok(approxEq(err1->ErrorMetricEuclidean.errToFloat, 0.14))})
+    it("err2 eq", () => {Assert.ok(approxEq(err2->ErrorMetricEuclidean.errToFloat, 0.0))})
+    it("err3 eq", () => {Assert.ok(approxEq(err3->ErrorMetricEuclidean.errToFloat, -0.66))})
+  })
+
+  describe("test weightCorrection", () => {
+    let givenL1Vals = Layer1.construct(
+      {solve: 0.66, derivative: 0.22},
+      {solve: 0.97, derivative: 0.02},
+      {solve: 0.17, derivative: 0.14},
+    )
+    let givenWeights = Layer1.construct(
+      Layer2.construct(0.76, 0.25),
+      Layer2.construct(0.15, -1.67),
+      Layer2.construct(-5.12, 3.11),
+    )
+    let givenError = Layer2.construct(0.87, -0.1)
+    let (w1, w2, w3) =
+      PerceptronLayer.weightCorrection(
+        givenL1Vals,
+        givenError,
+        givenWeights,
+        0.1,
+      )->Layer1.deconstruct
+    let (w11, w12) = w1->Layer2.deconstruct
+    let (w21, w22) = w2->Layer2.deconstruct
+    let (w31, w32) = w3->Layer2.deconstruct
+    it("w11 eq", () => {Assert.ok(approxEq(w11->ErrorMetricEuclidean.errToFloat, 0.7))})
+    it("w12 eq", () => {Assert.ok(approxEq(w12->ErrorMetricEuclidean.errToFloat, 0.25))})
+    it("w21 eq", () => {Assert.ok(approxEq(w21->ErrorMetricEuclidean.errToFloat, 0.07))})
+    it("w22 eq", () => {Assert.ok(approxEq(w22->ErrorMetricEuclidean.errToFloat, -1.66))})
+    it("w31 eq", () => {Assert.ok(approxEq(w31->ErrorMetricEuclidean.errToFloat, -5.13))})
+    it("w32 eq", () => {Assert.ok(approxEq(w32->ErrorMetricEuclidean.errToFloat, 3.11))})
+  })
+
+  describe("test init", () => {
+    let (w1, w2, w3) =
+      PerceptronLayer.init((_, _) => Js.Math.random() *. 2.0 -. 1.0)->Layer1.deconstruct
+    let (w11, w12) = w1->Layer2.deconstruct
+    let (w21, w22) = w2->Layer2.deconstruct
+    let (w31, w32) = w3->Layer2.deconstruct
+    let allVals = [w11, w12, w21, w22, w31, w32]
+    let zeroVals = Array.reduce(
+      allVals,
+      [],
+      (acc: array<float>, el) => el == 0.0 ? acc->Array.concat([el]) : acc,
+    )
+    let uniqVals = Array.reduce(
+      allVals,
+      [],
+      (acc, el) => Js.Array2.includes(acc, el) ? acc : acc->Array.concat([el]),
+    )
+    it("no zeros", () => {Assert.equal(zeroVals->Array.length, 0)})
+    it("all uniqs", () => {Assert.equal(uniqVals->Array.length, allVals->Array.length)})
   })
 })
