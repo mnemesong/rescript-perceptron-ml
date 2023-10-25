@@ -4,7 +4,7 @@ rule astj
   command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
 o rescript\test\MlPerceptronTestL3.ast : astj ..\..\rescript\test\MlPerceptronTestL3.res
 rule deps
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash 324e07d7d3b6744a26b413af1056424c $in
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash 5bd49b40a91dc7731ee32ca18e22282c $in
   restat = 1
 o rescript\test\MlPerceptronTestL3.d : deps rescript\test\MlPerceptronTestL3.ast
 rule mij
@@ -18,6 +18,9 @@ o rescript\test\MlPerceptronTestL4.cmj rescript\test\MlPerceptronTestL4.cmi ..\j
 o rescript\test\MlPerceptronLayerTest.ast : astj ..\..\rescript\test\MlPerceptronLayerTest.res
 o rescript\test\MlPerceptronLayerTest.d : deps rescript\test\MlPerceptronLayerTest.ast
 o rescript\test\MlPerceptronLayerTest.cmj rescript\test\MlPerceptronLayerTest.cmi ..\js\rescript\test\MlPerceptronLayerTest.bs.js : mij rescript\test\MlPerceptronLayerTest.ast
+o rescript\test\MlPerceptronRunnerTest.ast : astj ..\..\rescript\test\MlPerceptronRunnerTest.res
+o rescript\test\MlPerceptronRunnerTest.d : deps rescript\test\MlPerceptronRunnerTest.ast
+o rescript\test\MlPerceptronRunnerTest.cmj rescript\test\MlPerceptronRunnerTest.cmi ..\js\rescript\test\MlPerceptronRunnerTest.bs.js : mij rescript\test\MlPerceptronRunnerTest.ast
 o rescript\test\MlActivationFunctionTest.ast : astj ..\..\rescript\test\MlActivationFunctionTest.res
 o rescript\test\MlActivationFunctionTest.d : deps rescript\test\MlActivationFunctionTest.ast
 o rescript\test\MlActivationFunctionTest.cmj rescript\test\MlActivationFunctionTest.cmi ..\js\rescript\test\MlActivationFunctionTest.bs.js : mij rescript\test\MlActivationFunctionTest.ast
@@ -42,6 +45,11 @@ o rescript\src\MlPerceptronLayer.d : deps rescript\src\MlPerceptronLayer.ast res
 o rescript\src\MlPerceptronLayer.iast : astj ..\..\rescript\src\MlPerceptronLayer.resi
 o rescript\src\MlPerceptronLayer.cmi : mi rescript\src\MlPerceptronLayer.iast
 o rescript\src\MlPerceptronLayer.cmj ..\js\rescript\src\MlPerceptronLayer.bs.js : mj rescript\src\MlPerceptronLayer.ast rescript\src\MlPerceptronLayer.cmi
+o rescript\src\MlPerceptronRunner.ast : astj ..\..\rescript\src\MlPerceptronRunner.res
+o rescript\src\MlPerceptronRunner.d : deps rescript\src\MlPerceptronRunner.ast rescript\src\MlPerceptronRunner.iast
+o rescript\src\MlPerceptronRunner.iast : astj ..\..\rescript\src\MlPerceptronRunner.resi
+o rescript\src\MlPerceptronRunner.cmi : mi rescript\src\MlPerceptronRunner.iast
+o rescript\src\MlPerceptronRunner.cmj ..\js\rescript\src\MlPerceptronRunner.bs.js : mj rescript\src\MlPerceptronRunner.ast rescript\src\MlPerceptronRunner.cmi
 o rescript\src\MlActivationFunction.ast : astj ..\..\rescript\src\MlActivationFunction.res
 o rescript\src\MlActivationFunction.d : deps rescript\src\MlActivationFunction.ast rescript\src\MlActivationFunction.iast
 o rescript\src\MlActivationFunction.iast : astj ..\..\rescript\src\MlActivationFunction.resi
