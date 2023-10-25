@@ -3,10 +3,14 @@ rule cp
   command = cmd.exe /C copy /Y $i $out >NUL
 rule touch
  command = cmd.exe /C type nul >>$out & copy $out+,, >NUL
-o MlPerceptronTest.cmi : cp ..\bs\rescript\test\MlPerceptronTest.cmi
-o MlPerceptronTest.cmj : cp ..\bs\rescript\test\MlPerceptronTest.cmj
-o MlPerceptronTest.cmt : cp ..\bs\rescript\test\MlPerceptronTest.cmt
-o MlPerceptronTest.res : cp ..\..\rescript\test\MlPerceptronTest.res
+o MlPerceptronTestL3.cmi : cp ..\bs\rescript\test\MlPerceptronTestL3.cmi
+o MlPerceptronTestL3.cmj : cp ..\bs\rescript\test\MlPerceptronTestL3.cmj
+o MlPerceptronTestL3.cmt : cp ..\bs\rescript\test\MlPerceptronTestL3.cmt
+o MlPerceptronTestL3.res : cp ..\..\rescript\test\MlPerceptronTestL3.res
+o MlPerceptronTestL4.cmi : cp ..\bs\rescript\test\MlPerceptronTestL4.cmi
+o MlPerceptronTestL4.cmj : cp ..\bs\rescript\test\MlPerceptronTestL4.cmj
+o MlPerceptronTestL4.cmt : cp ..\bs\rescript\test\MlPerceptronTestL4.cmt
+o MlPerceptronTestL4.res : cp ..\..\rescript\test\MlPerceptronTestL4.res
 o MlPerceptronLayerTest.cmi : cp ..\bs\rescript\test\MlPerceptronLayerTest.cmi
 o MlPerceptronLayerTest.cmj : cp ..\bs\rescript\test\MlPerceptronLayerTest.cmj
 o MlPerceptronLayerTest.cmt : cp ..\bs\rescript\test\MlPerceptronLayerTest.cmt
@@ -43,4 +47,4 @@ o MlErrorMetricFunction.cmt : cp ..\bs\rescript\src\MlErrorMetricFunction.cmt
 o MlErrorMetricFunction.res : cp ..\..\rescript\src\MlErrorMetricFunction.res
 o MlErrorMetricFunction.resi : cp ..\..\rescript\src\MlErrorMetricFunction.resi
 o MlErrorMetricFunction.cmti : cp ..\bs\rescript\src\MlErrorMetricFunction.cmti
-build install.stamp : touch MlPerceptronTest.cmi MlPerceptronTest.cmj MlPerceptronLayerTest.cmi MlPerceptronLayerTest.cmj MlActivationFunctionTest.cmi MlActivationFunctionTest.cmj MlErrorMetricFunctionTest.cmi MlErrorMetricFunctionTest.cmj MlPerceptron.cmi MlPerceptron.cmj MlPerceptronLayer.cmi MlPerceptronLayer.cmj MlActivationFunction.cmi MlActivationFunction.cmj MlErrorMetricFunction.cmi MlErrorMetricFunction.cmj 
+build install.stamp : touch MlPerceptronTestL3.cmi MlPerceptronTestL3.cmj MlPerceptronTestL4.cmi MlPerceptronTestL4.cmj MlPerceptronLayerTest.cmi MlPerceptronLayerTest.cmj MlActivationFunctionTest.cmi MlActivationFunctionTest.cmj MlErrorMetricFunctionTest.cmi MlErrorMetricFunctionTest.cmj MlPerceptron.cmi MlPerceptron.cmj MlPerceptronLayer.cmi MlPerceptronLayer.cmj MlActivationFunction.cmi MlActivationFunction.cmj MlErrorMetricFunction.cmi MlErrorMetricFunction.cmj 

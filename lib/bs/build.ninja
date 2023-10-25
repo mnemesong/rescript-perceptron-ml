@@ -2,16 +2,19 @@ rescript = 1
 g_finger := D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml\install.stamp
 rule astj
   command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
-o rescript\test\MlPerceptronTest.ast : astj ..\..\rescript\test\MlPerceptronTest.res
+o rescript\test\MlPerceptronTestL3.ast : astj ..\..\rescript\test\MlPerceptronTestL3.res
 rule deps
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash d0486222c5e17059a50bb735e1546b5e $in
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash 324e07d7d3b6744a26b413af1056424c $in
   restat = 1
-o rescript\test\MlPerceptronTest.d : deps rescript\test\MlPerceptronTest.ast
+o rescript\test\MlPerceptronTestL3.d : deps rescript\test\MlPerceptronTestL3.ast
 rule mij
   command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -I "rescript\src" -I "rescript\test" -I rescript -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml"   -bs-package-name rescript-perceptron-ml -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
   dyndep = 1
   restat = 1
-o rescript\test\MlPerceptronTest.cmj rescript\test\MlPerceptronTest.cmi ..\js\rescript\test\MlPerceptronTest.bs.js : mij rescript\test\MlPerceptronTest.ast
+o rescript\test\MlPerceptronTestL3.cmj rescript\test\MlPerceptronTestL3.cmi ..\js\rescript\test\MlPerceptronTestL3.bs.js : mij rescript\test\MlPerceptronTestL3.ast
+o rescript\test\MlPerceptronTestL4.ast : astj ..\..\rescript\test\MlPerceptronTestL4.res
+o rescript\test\MlPerceptronTestL4.d : deps rescript\test\MlPerceptronTestL4.ast
+o rescript\test\MlPerceptronTestL4.cmj rescript\test\MlPerceptronTestL4.cmi ..\js\rescript\test\MlPerceptronTestL4.bs.js : mij rescript\test\MlPerceptronTestL4.ast
 o rescript\test\MlPerceptronLayerTest.ast : astj ..\..\rescript\test\MlPerceptronLayerTest.res
 o rescript\test\MlPerceptronLayerTest.d : deps rescript\test\MlPerceptronLayerTest.ast
 o rescript\test\MlPerceptronLayerTest.cmj rescript\test\MlPerceptronLayerTest.cmi ..\js\rescript\test\MlPerceptronLayerTest.bs.js : mij rescript\test\MlPerceptronLayerTest.ast

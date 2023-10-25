@@ -15,6 +15,7 @@ module L2Count: LayerCount = {
 module L3Count: LayerCount = {
   let layerCount = 1
 }
+
 module L1 = MakePerceptronLayerLimitedArr(L1Count)
 module L2 = MakePerceptronLayerLimitedArr(L2Count)
 module L3 = MakePerceptronLayerLimitedArr(L3Count)
@@ -26,7 +27,7 @@ type datarow<'i, 'o> = {i: 'i, o: 'o}
 exception L3LayerGetResultException
 exception StudePerceptronGetResultExn
 
-describe("test 2 and 8 recognizer Perceptron", () => {
+describe("test 2 and 8 recognizer Perceptron l3", () => {
   let makeDataSet: int => array<datarow<L1.layer<float>, float>> = %raw(`
   function(cnt) {
     let result = [];
@@ -73,5 +74,5 @@ describe("test 2 and 8 recognizer Perceptron", () => {
     }
   }->Result.getExn
   let onlyFalsesResults = Js.Array2.filter(solutions, b => b == false)
-  Assert.ok(Array.length(onlyFalsesResults) < 5)
+  it("assert has no fales", () => {Assert.ok(Array.length(onlyFalsesResults) < 5)})
 })

@@ -29,3 +29,26 @@ module type MakePerceptron3 = (
 )
 
 module MakePerceptron3: MakePerceptron3
+
+type w3<'a, 'b, 'c> = W('a, 'b, 'c)
+
+module type MakePerceptron4 = (
+  L1: PerceptronLayer,
+  L2: PerceptronLayer,
+  L3: PerceptronLayer,
+  L4: PerceptronLayer,
+  AF: ActivFunc,
+  EM: ErrorMetric,
+) =>
+(
+  Perceptron
+    with type input<'a> = L1.layer<'a>
+    and type output<'a> = L4.layer<'a>
+    and type weights = w3<
+      L1.layer<L2.layer<float>>,
+      L2.layer<L3.layer<float>>,
+      L3.layer<L4.layer<float>>,
+    >
+)
+
+module MakePerceptron4: MakePerceptron4
