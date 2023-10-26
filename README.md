@@ -213,7 +213,7 @@ module MakePerceptron4: MakePerceptron4
 ```
 
 #### MlPerceptronRunner.resi
-Runs bult stude of checking for perceptron
+Runs bulk stude of checking for perceptron
 ```rescript
 open MlPerceptron
 
