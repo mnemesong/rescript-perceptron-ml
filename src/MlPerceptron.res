@@ -62,16 +62,14 @@ module MakePerceptron3: MakePerceptron3 = (
     let l2Solvs = Result.flatMap(l1Solvs, r => r->L1XL2.solve(w1x2))
     let l3Solvs = Result.flatMap(l2Solvs, r => r->L2XL3.solve(w2x3))
     let err3 = Result.flatMap(l3Solvs, r => r->L2XL3.findError(out))
-    let err2 = Result.flatMap(l2Solvs, r =>
-      Result.flatMap(err3, e => L2XL3.backpropagadeError(r, e, w2x3))
+    let err2 = ResultExn.flatMap2(l2Solvs, err3, (r, e) => L2XL3.backpropagadeError(r, e, w2x3))
+    let w1x2' = ResultExn.flatMap2(l1Solvs, err2, (r, e) =>
+      L1XL2.weightCorrection(r, e, w1x2, studeCoeff)
     )
-    let w1x2' = Result.flatMap(l1Solvs, r =>
-      Result.flatMap(err2, e => L1XL2.weightCorrection(r, e, w1x2, studeCoeff))
+    let w2x3' = ResultExn.flatMap2(l2Solvs, err3, (r, e) =>
+      L2XL3.weightCorrection(r, e, w2x3, studeCoeff)
     )
-    let w2x3' = Result.flatMap(l2Solvs, r =>
-      Result.flatMap(err3, e => L2XL3.weightCorrection(r, e, w2x3, studeCoeff))
-    )
-    Result.flatMap(w1x2', w1 => Result.flatMap(w2x3', w2 => Ok(W(w1, w2))))
+    ResultExn.flatMap2(w1x2', w2x3', (w1, w2) => Ok(W(w1, w2)))
   }
 
   let init = (initor: (int, int, int) => float): weights => {

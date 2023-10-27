@@ -118,18 +118,17 @@ module MakePerceptronLayersCross: MakePerceptronLayersCross = (
   let solve = (l1: layer1<activFuncValue>, w: weights): result<layer2<activFuncValue>, exn> => {
     let layer1Arr = Layer1.layerToArr(l1)
     let weightsArr = Layer1.layerToArr(w)->Array.map(a => Layer2.layerToArr(a))
-    switch weightsArr[0]
-    ->Option.getExn
-    ->Array.mapWithIndex((n, _) => {
-      let valsWeighted =
-        layer1Arr->Array.mapWithIndex((i, v) =>
-          v.solve *. (weightsArr[i]->Option.getExn)[n]->Option.getExn
-        )
-      Array.reduce(valsWeighted, 0.0, (acc, el) => acc +. el)
-    }) {
-    | x => Ok(x)
-    | exception e => Error(e)
-    }
+    ResultExn.tryExec(() => {
+      weightsArr[0]
+      ->Option.getExn
+      ->Array.mapWithIndex((n, _) => {
+        let valsWeighted =
+          layer1Arr->Array.mapWithIndex(
+            (i, v) => v.solve *. (weightsArr[i]->Option.getExn)[n]->Option.getExn,
+          )
+        Array.reduce(valsWeighted, 0.0, (acc, el) => acc +. el)
+      })
+    })
     ->Result.map(r =>
       r->Array.map(v => {
         solve: F.solve(v),
@@ -143,16 +142,13 @@ module MakePerceptronLayersCross: MakePerceptronLayersCross = (
     layer2<errVal>,
     exn,
   > =>
-    switch {
+    ResultExn.tryExecFlat(() => {
       let valsArr = Layer2.layerToArr(vals)
       nominals
       ->Layer2.layerToArr
       ->Array.mapWithIndex((i, n) => Err.errMetricDerivative(n, (valsArr[i]->Option.getExn).solve))
       ->Layer2.arrToLayer
-    } {
-    | x => x
-    | exception e => Error(e)
-    }
+    })
 
   let backpropagadeError = (
     l1Vals: layer1<activFuncValue>,
@@ -160,23 +156,25 @@ module MakePerceptronLayersCross: MakePerceptronLayersCross = (
     weights: weights,
   ): result<layer1<errVal>, exn> => {
     let weightsArr = Layer1.layerToArr(weights)->Array.map(w => Layer2.layerToArr(w))
-    switch l1Vals
-    ->Layer1.layerToArr
-    ->Array.mapWithIndex((i, l1v) => {
-      let errSum =
-        l2Errs
-        ->Layer2.layerToArr
-        ->Array.mapWithIndex((j, el) => (Err.errToFloat(el), j))
-        ->Array.reduce(0.0, (acc, el) => {
-          let (errFl, j) = el
-          acc +. errFl *. (weightsArr[i]->Option.getExn)[j]->Option.getExn
-        })
-      Err.floatToErr(errSum *. l1v.derivative)
+    ResultExn.tryExecFlat(() => {
+      l1Vals
+      ->Layer1.layerToArr
+      ->Array.mapWithIndex((i, l1v) => {
+        let errSum =
+          l2Errs
+          ->Layer2.layerToArr
+          ->Array.mapWithIndex((j, el) => (Err.errToFloat(el), j))
+          ->Array.reduce(
+            0.0,
+            (acc, el) => {
+              let (errFl, j) = el
+              acc +. errFl *. (weightsArr[i]->Option.getExn)[j]->Option.getExn
+            },
+          )
+        Err.floatToErr(errSum *. l1v.derivative)
+      })
+      ->Layer1.arrToLayer
     })
-    ->Layer1.arrToLayer {
-    | x => x
-    | exception e => Error(e)
-    }
   }
 
   let weightCorrection = (
@@ -188,19 +186,21 @@ module MakePerceptronLayersCross: MakePerceptronLayersCross = (
     let l1ValsArr = Layer1.layerToArr(l1Vals)
     let l2ErrArr = Layer2.layerToArr(l2Errs)
     let weightsArr = Layer1.layerToArr(weights)->Array.map(w => Layer2.layerToArr(w))
-    switch weightsArr
-    ->Array.mapWithIndex((i, wi) =>
-      Array.mapWithIndex(wi, (j, wj) => {
-        let solve = (l1ValsArr[i]->Option.getExn).solve
-        let err = l2ErrArr[j]->Option.getExn->Err.errToFloat
-        wj -. learnCoeff *. solve *. err
-      })
-    )
-    ->Array.map(nw => nw->Layer2.arrToLayer->Result.getExn)
-    ->Layer1.arrToLayer {
-    | x => x
-    | exception e => Error(e)
-    }
+    ResultExn.tryExecFlat(() => {
+      weightsArr
+      ->Array.mapWithIndex((i, wi) =>
+        Array.mapWithIndex(
+          wi,
+          (j, wj) => {
+            let solve = (l1ValsArr[i]->Option.getExn).solve
+            let err = l2ErrArr[j]->Option.getExn->Err.errToFloat
+            wj -. learnCoeff *. solve *. err
+          },
+        )
+      )
+      ->Array.map(nw => nw->Layer2.arrToLayer->Result.getExn)
+      ->Layer1.arrToLayer
+    })
   }
 
   let init = (initor: (int, int) => float): weights => {

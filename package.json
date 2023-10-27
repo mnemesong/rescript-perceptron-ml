@@ -1,6 +1,6 @@
 {
   "name": "rescript-perceptron-ml",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "perceptron-generator on rescript",
   "scripts": {
     "res:build": "rescript",
@@ -12,9 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "rescript": "^10.1.4",
-    "rescript-mocha": "*"
+    "rescript-mocha": "^0.9.0"
   },
   "dependencies": {
-    "rescript-result-exn": "*"
+    "rescript-result-exn": "^0.1.1"
   }
 }
