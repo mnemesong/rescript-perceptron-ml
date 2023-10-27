@@ -5,7 +5,7 @@
   "scripts": {
     "res:build": "rescript",
     "res:dev": "rescript build -w",
-    "test:unit": "mocha ./lib/js/rescript/test"
+    "test:unit": "mocha ./lib/js/test"
   },
   "keywords": [],
   "author": "Anatoly Starodubtsev",
@@ -13,5 +13,8 @@
   "devDependencies": {
     "rescript": "^10.1.4",
     "rescript-mocha": "*"
+  },
+  "dependencies": {
+    "rescript-result-exn": "*"
   }
 }

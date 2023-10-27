@@ -1,62 +1,66 @@
 rescript = 1
+g_finger := D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-result-exn\lib\ocaml\install.stamp
 g_finger := D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml\install.stamp
 rule astj
   command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe"  -bs-v 10.1.4  -absname -bs-ast -o $out $i
-o rescript\test\MlPerceptronTestL3.ast : astj ..\..\rescript\test\MlPerceptronTestL3.res
+o test\MlPerceptronTestL3.ast : astj ..\..\test\MlPerceptronTestL3.res
+rule deps_dev
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -g -hash ef728d442fc7a3669e1a355ad5bd8064 $in
+  restat = 1
+o test\MlPerceptronTestL3.d : deps_dev test\MlPerceptronTestL3.ast
+rule mij_dev
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -I test -I src -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-result-exn\lib\ocaml" -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml"   -bs-package-name rescript-perceptron-ml -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  dyndep = 1
+  restat = 1
+o test\MlPerceptronTestL3.cmj test\MlPerceptronTestL3.cmi ..\js\test\MlPerceptronTestL3.bs.js : mij_dev test\MlPerceptronTestL3.ast
+o test\MlPerceptronTestL4.ast : astj ..\..\test\MlPerceptronTestL4.res
+o test\MlPerceptronTestL4.d : deps_dev test\MlPerceptronTestL4.ast
+o test\MlPerceptronTestL4.cmj test\MlPerceptronTestL4.cmi ..\js\test\MlPerceptronTestL4.bs.js : mij_dev test\MlPerceptronTestL4.ast
+o test\MlPerceptronLayerTest.ast : astj ..\..\test\MlPerceptronLayerTest.res
+o test\MlPerceptronLayerTest.d : deps_dev test\MlPerceptronLayerTest.ast
+o test\MlPerceptronLayerTest.cmj test\MlPerceptronLayerTest.cmi ..\js\test\MlPerceptronLayerTest.bs.js : mij_dev test\MlPerceptronLayerTest.ast
+o test\MlPerceptronRunnerTest.ast : astj ..\..\test\MlPerceptronRunnerTest.res
+o test\MlPerceptronRunnerTest.d : deps_dev test\MlPerceptronRunnerTest.ast
+o test\MlPerceptronRunnerTest.cmj test\MlPerceptronRunnerTest.cmi ..\js\test\MlPerceptronRunnerTest.bs.js : mij_dev test\MlPerceptronRunnerTest.ast
+o test\MlActivationFunctionTest.ast : astj ..\..\test\MlActivationFunctionTest.res
+o test\MlActivationFunctionTest.d : deps_dev test\MlActivationFunctionTest.ast
+o test\MlActivationFunctionTest.cmj test\MlActivationFunctionTest.cmi ..\js\test\MlActivationFunctionTest.bs.js : mij_dev test\MlActivationFunctionTest.ast
+o test\MlErrorMetricFunctionTest.ast : astj ..\..\test\MlErrorMetricFunctionTest.res
+o test\MlErrorMetricFunctionTest.d : deps_dev test\MlErrorMetricFunctionTest.ast
+o test\MlErrorMetricFunctionTest.cmj test\MlErrorMetricFunctionTest.cmi ..\js\test\MlErrorMetricFunctionTest.bs.js : mij_dev test\MlErrorMetricFunctionTest.ast
+o src\MlPerceptron.ast : astj ..\..\src\MlPerceptron.res
 rule deps
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash 5bd49b40a91dc7731ee32ca18e22282c $in
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsb_helper.exe" -hash ef728d442fc7a3669e1a355ad5bd8064 $in
   restat = 1
-o rescript\test\MlPerceptronTestL3.d : deps rescript\test\MlPerceptronTestL3.ast
-rule mij
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -I "rescript\src" -I "rescript\test" -I rescript -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml"   -bs-package-name rescript-perceptron-ml -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
-  dyndep = 1
-  restat = 1
-o rescript\test\MlPerceptronTestL3.cmj rescript\test\MlPerceptronTestL3.cmi ..\js\rescript\test\MlPerceptronTestL3.bs.js : mij rescript\test\MlPerceptronTestL3.ast
-o rescript\test\MlPerceptronTestL4.ast : astj ..\..\rescript\test\MlPerceptronTestL4.res
-o rescript\test\MlPerceptronTestL4.d : deps rescript\test\MlPerceptronTestL4.ast
-o rescript\test\MlPerceptronTestL4.cmj rescript\test\MlPerceptronTestL4.cmi ..\js\rescript\test\MlPerceptronTestL4.bs.js : mij rescript\test\MlPerceptronTestL4.ast
-o rescript\test\MlPerceptronLayerTest.ast : astj ..\..\rescript\test\MlPerceptronLayerTest.res
-o rescript\test\MlPerceptronLayerTest.d : deps rescript\test\MlPerceptronLayerTest.ast
-o rescript\test\MlPerceptronLayerTest.cmj rescript\test\MlPerceptronLayerTest.cmi ..\js\rescript\test\MlPerceptronLayerTest.bs.js : mij rescript\test\MlPerceptronLayerTest.ast
-o rescript\test\MlPerceptronRunnerTest.ast : astj ..\..\rescript\test\MlPerceptronRunnerTest.res
-o rescript\test\MlPerceptronRunnerTest.d : deps rescript\test\MlPerceptronRunnerTest.ast
-o rescript\test\MlPerceptronRunnerTest.cmj rescript\test\MlPerceptronRunnerTest.cmi ..\js\rescript\test\MlPerceptronRunnerTest.bs.js : mij rescript\test\MlPerceptronRunnerTest.ast
-o rescript\test\MlActivationFunctionTest.ast : astj ..\..\rescript\test\MlActivationFunctionTest.res
-o rescript\test\MlActivationFunctionTest.d : deps rescript\test\MlActivationFunctionTest.ast
-o rescript\test\MlActivationFunctionTest.cmj rescript\test\MlActivationFunctionTest.cmi ..\js\rescript\test\MlActivationFunctionTest.bs.js : mij rescript\test\MlActivationFunctionTest.ast
-o rescript\test\MlErrorMetricFunctionTest.ast : astj ..\..\rescript\test\MlErrorMetricFunctionTest.res
-o rescript\test\MlErrorMetricFunctionTest.d : deps rescript\test\MlErrorMetricFunctionTest.ast
-o rescript\test\MlErrorMetricFunctionTest.cmj rescript\test\MlErrorMetricFunctionTest.cmi ..\js\rescript\test\MlErrorMetricFunctionTest.bs.js : mij rescript\test\MlErrorMetricFunctionTest.ast
-o rescript\src\MlPerceptron.ast : astj ..\..\rescript\src\MlPerceptron.res
-o rescript\src\MlPerceptron.d : deps rescript\src\MlPerceptron.ast rescript\src\MlPerceptron.iast
-o rescript\src\MlPerceptron.iast : astj ..\..\rescript\src\MlPerceptron.resi
+o src\MlPerceptron.d : deps src\MlPerceptron.ast src\MlPerceptron.iast
+o src\MlPerceptron.iast : astj ..\..\src\MlPerceptron.resi
 rule mi
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -I "rescript\src" -I "rescript\test" -I rescript -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml"   -bs-v $g_finger $i
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -I src -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-result-exn\lib\ocaml"   -bs-v $g_finger $i
   dyndep = 1
   restat = 1
-o rescript\src\MlPerceptron.cmi : mi rescript\src\MlPerceptron.iast
+o src\MlPerceptron.cmi : mi src\MlPerceptron.iast
 rule mj
-  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -bs-read-cmi -I "rescript\src" -I "rescript\test" -I rescript -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-mocha\lib\ocaml"   -bs-package-name rescript-perceptron-ml -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
+  command = "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript\win32\bsc.exe" -bs-read-cmi -I src -I "D:\rescript-projects\rescript-perceptron-ml\node_modules\rescript-result-exn\lib\ocaml"   -bs-package-name rescript-perceptron-ml -bs-package-output commonjs:lib\js\$in_d:.bs.js -bs-v $g_finger $i
   dyndep = 1
   restat = 1
-o rescript\src\MlPerceptron.cmj ..\js\rescript\src\MlPerceptron.bs.js : mj rescript\src\MlPerceptron.ast rescript\src\MlPerceptron.cmi
-o rescript\src\MlPerceptronLayer.ast : astj ..\..\rescript\src\MlPerceptronLayer.res
-o rescript\src\MlPerceptronLayer.d : deps rescript\src\MlPerceptronLayer.ast rescript\src\MlPerceptronLayer.iast
-o rescript\src\MlPerceptronLayer.iast : astj ..\..\rescript\src\MlPerceptronLayer.resi
-o rescript\src\MlPerceptronLayer.cmi : mi rescript\src\MlPerceptronLayer.iast
-o rescript\src\MlPerceptronLayer.cmj ..\js\rescript\src\MlPerceptronLayer.bs.js : mj rescript\src\MlPerceptronLayer.ast rescript\src\MlPerceptronLayer.cmi
-o rescript\src\MlPerceptronRunner.ast : astj ..\..\rescript\src\MlPerceptronRunner.res
-o rescript\src\MlPerceptronRunner.d : deps rescript\src\MlPerceptronRunner.ast rescript\src\MlPerceptronRunner.iast
-o rescript\src\MlPerceptronRunner.iast : astj ..\..\rescript\src\MlPerceptronRunner.resi
-o rescript\src\MlPerceptronRunner.cmi : mi rescript\src\MlPerceptronRunner.iast
-o rescript\src\MlPerceptronRunner.cmj ..\js\rescript\src\MlPerceptronRunner.bs.js : mj rescript\src\MlPerceptronRunner.ast rescript\src\MlPerceptronRunner.cmi
-o rescript\src\MlActivationFunction.ast : astj ..\..\rescript\src\MlActivationFunction.res
-o rescript\src\MlActivationFunction.d : deps rescript\src\MlActivationFunction.ast rescript\src\MlActivationFunction.iast
-o rescript\src\MlActivationFunction.iast : astj ..\..\rescript\src\MlActivationFunction.resi
-o rescript\src\MlActivationFunction.cmi : mi rescript\src\MlActivationFunction.iast
-o rescript\src\MlActivationFunction.cmj ..\js\rescript\src\MlActivationFunction.bs.js : mj rescript\src\MlActivationFunction.ast rescript\src\MlActivationFunction.cmi
-o rescript\src\MlErrorMetricFunction.ast : astj ..\..\rescript\src\MlErrorMetricFunction.res
-o rescript\src\MlErrorMetricFunction.d : deps rescript\src\MlErrorMetricFunction.ast rescript\src\MlErrorMetricFunction.iast
-o rescript\src\MlErrorMetricFunction.iast : astj ..\..\rescript\src\MlErrorMetricFunction.resi
-o rescript\src\MlErrorMetricFunction.cmi : mi rescript\src\MlErrorMetricFunction.iast
-o rescript\src\MlErrorMetricFunction.cmj ..\js\rescript\src\MlErrorMetricFunction.bs.js : mj rescript\src\MlErrorMetricFunction.ast rescript\src\MlErrorMetricFunction.cmi
+o src\MlPerceptron.cmj ..\js\src\MlPerceptron.bs.js : mj src\MlPerceptron.ast src\MlPerceptron.cmi
+o src\MlPerceptronLayer.ast : astj ..\..\src\MlPerceptronLayer.res
+o src\MlPerceptronLayer.d : deps src\MlPerceptronLayer.ast src\MlPerceptronLayer.iast
+o src\MlPerceptronLayer.iast : astj ..\..\src\MlPerceptronLayer.resi
+o src\MlPerceptronLayer.cmi : mi src\MlPerceptronLayer.iast
+o src\MlPerceptronLayer.cmj ..\js\src\MlPerceptronLayer.bs.js : mj src\MlPerceptronLayer.ast src\MlPerceptronLayer.cmi
+o src\MlPerceptronRunner.ast : astj ..\..\src\MlPerceptronRunner.res
+o src\MlPerceptronRunner.d : deps src\MlPerceptronRunner.ast src\MlPerceptronRunner.iast
+o src\MlPerceptronRunner.iast : astj ..\..\src\MlPerceptronRunner.resi
+o src\MlPerceptronRunner.cmi : mi src\MlPerceptronRunner.iast
+o src\MlPerceptronRunner.cmj ..\js\src\MlPerceptronRunner.bs.js : mj src\MlPerceptronRunner.ast src\MlPerceptronRunner.cmi
+o src\MlActivationFunction.ast : astj ..\..\src\MlActivationFunction.res
+o src\MlActivationFunction.d : deps src\MlActivationFunction.ast src\MlActivationFunction.iast
+o src\MlActivationFunction.iast : astj ..\..\src\MlActivationFunction.resi
+o src\MlActivationFunction.cmi : mi src\MlActivationFunction.iast
+o src\MlActivationFunction.cmj ..\js\src\MlActivationFunction.bs.js : mj src\MlActivationFunction.ast src\MlActivationFunction.cmi
+o src\MlErrorMetricFunction.ast : astj ..\..\src\MlErrorMetricFunction.res
+o src\MlErrorMetricFunction.d : deps src\MlErrorMetricFunction.ast src\MlErrorMetricFunction.iast
+o src\MlErrorMetricFunction.iast : astj ..\..\src\MlErrorMetricFunction.resi
+o src\MlErrorMetricFunction.cmi : mi src\MlErrorMetricFunction.iast
+o src\MlErrorMetricFunction.cmj ..\js\src\MlErrorMetricFunction.bs.js : mj src\MlErrorMetricFunction.ast src\MlErrorMetricFunction.cmi

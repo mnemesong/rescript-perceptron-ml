@@ -1,15 +1,17 @@
-11
+5
 MlPerceptron
 MlPerceptronLayer
 MlPerceptronRunner
-MlPerceptronTestL3
-MlPerceptronTestL4
 MlActivationFunction
 MlErrorMetricFunction
+src	
+1
+6
+MlPerceptronTestL3
+MlPerceptronTestL4
 MlPerceptronLayerTest
 MlPerceptronRunnerTest
 MlActivationFunctionTest
 MlErrorMetricFunctionTest
-rescript\src	rescript\test	
-1
-0
+test	
+1

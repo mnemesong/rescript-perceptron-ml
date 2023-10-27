@@ -1,1 +1,1 @@
-{ "dirs" : [ "rescript" , "rescript\\test" , "rescript\\src" ] , "pkgs" : [ [ "rescript-mocha" , "D:\\rescript-projects\\rescript-perceptron-ml\\node_modules\\rescript-mocha" ] ] , "generated" : [] }
+{ "dirs" : [ "test" , "src" ] , "pkgs" : [ [ "rescript-mocha" , "D:\\rescript-projects\\rescript-perceptron-ml\\node_modules\\rescript-mocha" ] , [ "rescript-result-exn" , "D:\\rescript-projects\\rescript-perceptron-ml\\node_modules\\rescript-result-exn" ] ] , "generated" : [] }

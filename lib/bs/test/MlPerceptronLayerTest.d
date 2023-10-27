@@ -1,0 +1,1 @@
+test\MlPerceptronLayerTest.cmj : src\MlActivationFunction.cmj src\MlActivationFunction.cmi src\MlErrorMetricFunction.cmj src\MlErrorMetricFunction.cmi src\MlPerceptronLayer.cmj src\MlPerceptronLayer.cmi
